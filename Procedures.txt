@@ -1,0 +1,22 @@
+First   -> models.py
+Second  -> schema.py
+Third   -> route_file.py
+Fourth  -> main.py
+
+1. Routers with their CRUD Operations
+2. Security Features
+    Role-based auth
+    Password reset
+    Rate limiting
+    Refresh tokens
+    OAuth (Google login)
+    Email verification
+3. Data Validation
+4. Unit Testing
+5. Documentation
+6. Error Handling
+7. Requirements file
+8. Deployment
+9. Intergration with Frontend
+
+
