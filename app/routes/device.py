@@ -17,7 +17,7 @@ router = APIRouter(prefix="/device", tags=["Device"])
 def create_device(
     device: schema.DeviceCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user = Depends(require_admin)
 ):
     new_device = models.Device(**device.model_dump())
     db.add(new_device)

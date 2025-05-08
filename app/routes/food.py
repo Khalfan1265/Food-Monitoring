@@ -17,7 +17,7 @@ router = APIRouter(prefix="/food", tags=["Food"])
 def create_food(
     food: schema.FoodCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user = Depends(require_admin)
 ):
     new_food = models.Food(**food.model_dump())
     db.add(new_food)
@@ -53,7 +53,7 @@ def update_food(
     food_id: uuid.UUID,
     update_data: schema.FoodCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user = Depends(require_admin)
 ):
     food = db.query(models.Food).filter(models.Food.food_id == food_id).first()
     if not food:

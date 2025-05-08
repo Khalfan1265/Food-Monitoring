@@ -62,7 +62,7 @@ class Food(Base):
     meal_type = Column(String(50), nullable=False)
     food_items = Column(Text, nullable=False)
     intake_time = Column(TIMESTAMP(timezone=True), nullable=False)
-    calories_estimate = Column(Float, nullable=False)
+    calories_estimate = Column(Float)
 
 
 class Drink(Base):

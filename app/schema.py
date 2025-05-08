@@ -32,7 +32,7 @@ class StudentOut(BaseModel):
     role: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class StudentSignup(BaseModel):
@@ -60,7 +60,7 @@ class StudentOut(BaseModel):
     role: str = "Student"
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 
@@ -79,7 +79,7 @@ class DeviceOut(BaseModel):
     registration_date: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Schema for Creating new Health
@@ -103,7 +103,7 @@ class HealthOut(BaseModel):
     measurement_time: datetime
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Schema for creating new Food
@@ -125,7 +125,7 @@ class FoodOut(BaseModel):
     calories_estimate: float
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Schema for creating new Drink
@@ -147,7 +147,7 @@ class DrinkOut(BaseModel):
     drink_time: datetime
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Schema for creating new Allergy
@@ -165,7 +165,7 @@ class AllergyOut(BaseModel):
     description: str
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Schema for creating new suggestion
@@ -183,7 +183,7 @@ class SuggestionOut(BaseModel):
     generated_on: datetime
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 class LoginRequest(BaseModel):
