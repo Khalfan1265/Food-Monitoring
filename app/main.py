@@ -34,10 +34,12 @@ app = FastAPI(
     description="Monitoring API with JWT Authentication"
 )
 
+
 # Global Rate Limiter Setup (e.g., 10 requests per minute per IP)
 limiter = Limiter(key_func=get_remote_address, default_limits=["10/minute"])
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
+
 
 # Rate limit error response
 @app.exception_handler(RateLimitExceeded)
@@ -46,6 +48,7 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
         status_code=429,
         content={"detail": "Rate limit exceeded. Try again in a moment."}
     )
+
 
 # CORS setup (allow everything for now)
 app.add_middleware(
@@ -83,19 +86,20 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
+
 app.openapi = custom_openapi
 
 # Include routes
+app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+app.include_router(secure.router, prefix="/secure", tags=["Secure"])
+app.include_router(password_reset.router, prefix="/password-reset", tags=["Password Reset"])
+app.include_router(food_suggestion.router, prefix="/suggestions", tags=["Suggestions"])
 app.include_router(student.router, prefix="/student", tags=["Student"])
 app.include_router(device.router, prefix="/device", tags=["Device"])
 app.include_router(health.router, prefix="/health", tags=["Health"])
 app.include_router(food.router, prefix="/food", tags=["Food"])
 app.include_router(drink.router, prefix="/drink", tags=["Drink"])
 app.include_router(allergy.router, prefix="/allergy", tags=["Allergy"])
-app.include_router(food_suggestion.router, prefix="/suggestions", tags=["Suggestions"])
-app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
-app.include_router(secure.router, prefix="/secure", tags=["Secure"])
-app.include_router(password_reset.router, prefix="/password-reset", tags=["Password Reset"])
 
 # Root route
 @app.get("/")

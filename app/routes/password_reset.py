@@ -6,7 +6,8 @@ from app import models, schema, database
 from app.security import create_reset_token, verify_reset_token, hash_password
 from fastapi.responses import JSONResponse
 from app.database import get_db
-
+from app.schema import PasswordResetConfirm # Pydantic schemas
+from app.models import Student
 
 
 router = APIRouter(prefix="/password-reset", tags=["Password Reset"])
@@ -24,7 +25,7 @@ def request_password_reset(payload: schema.PasswordResetRequest, db: Session = D
     return {"reset_token": token, "message": "Send this token to the user via email"}
 
 
-@router.post("/password-reset/confirm")
+@router.post("/confirm")
 def reset_password(data: schema.PasswordResetConfirm, db: Session = Depends(get_db)):
     email = verify_reset_token(data.token)
     if not email:
@@ -44,4 +45,21 @@ def reset_password(data: schema.PasswordResetConfirm, db: Session = Depends(get_
 
     return {"detail": "Password has been reset successfully"}
 
+
+@router.post("/reset-confirm")
+def confirm_reset(data: PasswordResetConfirm, db: Session = Depends(get_db)):
+    if data.new_password != data.confirm_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match")
+
+    email = verify_reset_token(data.token)
+    if not email:
+        raise HTTPException(status_code=400, detail="Invalid or expired token")
+
+    student = db.query(Student).filter(Student.email == email).first()
+    if not student:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    student.user_password = hash_password(data.new_password)
+    db.commit()
+    return {"detail": "Password reset successful"}
 

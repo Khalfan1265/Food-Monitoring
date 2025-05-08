@@ -22,9 +22,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT settings
-SECRET_KEY = "60371ab1e0beda7311dbeb45355a945ed73eaf0516952ef9fb501155c8e3fa19"  # Change for production
+SECRET_KEY = "60371ab1e0beda7311dbeb45355a945ed73eaf0516952ef9fb501155c8e3fa19"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 30 # Token valid for 30 minutes
 
 # ------------------------------
 # Password Utilities
@@ -140,6 +140,7 @@ def create_refresh_token(data: dict):
     expire = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
+
 
 def verify_refresh_token(token: str):
     try:

@@ -71,6 +71,9 @@ def update_student(
 
     for key, value in update_data.dict().items():
         setattr(student, key, value)
+    
+    hashed_password = hash_password(student.user_password)
+    student.user_password = hashed_password
 
     db.commit()
     db.refresh(student)

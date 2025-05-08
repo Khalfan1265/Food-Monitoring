@@ -35,6 +35,35 @@ class StudentOut(BaseModel):
         orm_mode = True
 
 
+class StudentSignup(BaseModel):
+    first_name: str
+    last_name: str
+    email: EmailStr
+    user_password: str
+    gender: str
+    date_of_birth: datetime
+    height_m: float
+    weight_kg: float
+    role: str = "Student"  # Default value
+
+
+
+class StudentOut(BaseModel):
+    user_id: uuid.UUID
+    first_name: str
+    last_name: str
+    email: EmailStr
+    gender: str
+    data_of_birth: datetime
+    height_m: float
+    weight_kg: float
+    role: str = "Student"
+
+    class Config:
+        orm_mode = True
+
+
+
 # Schema for creating new device data
 class DeviceCreate(BaseModel):
     user_id: uuid.UUID
@@ -164,6 +193,7 @@ class LoginRequest(BaseModel):
 
 class TokenResponse(BaseModel):
     access_token: str
+    refresh_token: str = None
 
 
 class PasswordResetRequest(BaseModel):
@@ -184,7 +214,3 @@ class PasswordResetConfirm(BaseModel):
 class TokenRefreshRequest(BaseModel):
     refresh_token: str
 
-
-class TokenResponse(BaseModel):
-    access_token: str
-    refresh_token: str = None

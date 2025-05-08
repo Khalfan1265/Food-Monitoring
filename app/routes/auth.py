@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
+import uuid
 
 from app.models import Student  # SQLAlchemy model
-from app.schema import LoginRequest, TokenResponse, PasswordResetConfirm, TokenRefreshRequest  # Pydantic schemas
+from app.schema import LoginRequest, TokenResponse, TokenRefreshRequest  # Pydantic schemas
 from app.security import verify_password, create_access_token, create_refresh_token, verify_reset_token, hash_password, verify_refresh_token
 from app.database import get_db
+from app import models, schema, database, security
 
 router = APIRouter(tags=["Authentication"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -13,7 +15,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 # -------------------------------
 # Login endpoint
 # -------------------------------
-@router.post("/auth/login", response_model=TokenResponse)
+@router.post("/login", response_model=TokenResponse)
 def login_student(login: LoginRequest, db: Session = Depends(get_db)):
     """
     Authenticate user and return a JWT access token.
@@ -33,7 +35,32 @@ def login_student(login: LoginRequest, db: Session = Depends(get_db)):
     return {"access_token": access_token, "refresh_token": refresh_token}
 
 
-@router.post("/auth/refresh", response_model=TokenResponse)
+# -------------------------------
+# Signup endpoint
+# -------------------------------
+@router.post("/signup", response_model=schema.StudentOut)
+def signup(student: schema.StudentSignup, db: Session = Depends(database.get_db)):
+    # Check if email already exists
+    existing_user = db.query(models.Student).filter(models.Student.email == student.email).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    # Hash the password
+    hashed_password = security.hash_password(student.user_password)
+    student.user_password = hashed_password
+
+    # Create new student instance
+    new_student = models.Student(**student.model_dump())
+    db.add(new_student)
+    db.commit()
+    db.refresh(new_student)
+    return new_student
+
+
+# -------------------------------
+# Refresh Token endpoint
+# -------------------------------
+@router.post("/refresh", response_model=TokenResponse)
 def refresh_token(request: TokenRefreshRequest):
     email = verify_refresh_token(request.refresh_token)
     if not email:
@@ -43,24 +70,6 @@ def refresh_token(request: TokenRefreshRequest):
     new_access_token = create_access_token(data={"sub": email})
     return {
         "access_token": new_access_token,
-        "refresh_token": request.refresh_token  # Optional: rotate if you prefer
+        "refresh_token": request.refresh_token
     }
-
-
-@router.post("/auth/reset-confirm")
-def confirm_reset(data: PasswordResetConfirm, db: Session = Depends(get_db)):
-    if data.new_password != data.confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-
-    email = verify_reset_token(data.token)
-    if not email:
-        raise HTTPException(status_code=400, detail="Invalid or expired token")
-
-    student = db.query(Student).filter(Student.email == email).first()
-    if not student:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    student.user_password = hash_password(data.new_password)
-    db.commit()
-    return {"detail": "Password reset successful"}
 
