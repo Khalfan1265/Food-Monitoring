@@ -158,7 +158,7 @@ class SuggestionOut(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    email: str
+    email: EmailStr
     password: str
 
 
@@ -179,3 +179,12 @@ class PasswordResetConfirm(BaseModel):
     token: str
     new_password: str = Field(min_length=8)
     confirm_password: str = Field(min_length=8)
+
+
+class TokenRefreshRequest(BaseModel):
+    refresh_token: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    refresh_token: str = None

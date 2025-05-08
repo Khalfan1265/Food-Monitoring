@@ -129,3 +129,24 @@ def verify_reset_token(token: str):
         return email
     except JWTError:
         return None
+
+
+# Refresh token configuration
+REFRESH_SECRET_KEY = "0Ig0mrcOQV4DzDkPImtivcHX1wGCaDm9zEBXi8DGZpbe-P1ZtgaSSBGztKU1i0Zfwo6An-25vY-n7J8oKzJNCw"
+REFRESH_TOKEN_EXPIRE_DAYS = 7
+
+def create_refresh_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
+
+def verify_refresh_token(token: str):
+    try:
+        payload = jwt.decode(token, REFRESH_SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            return None
+        return email
+    except JWTError:
+        return None

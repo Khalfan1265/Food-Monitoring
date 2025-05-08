@@ -1,21 +1,28 @@
 # app/main.py
 
+import os
 from fastapi import FastAPI, Request
 from fastapi.openapi.utils import get_openapi
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
+
 
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
+
 from app import models, database
 from app.routes import (
     student, device, health, food, drink,
     allergy, food_suggestion, auth, secure, password_reset
 )
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize DB
 models.Base.metadata.create_all(bind=database.engine)
@@ -94,3 +101,4 @@ app.include_router(password_reset.router, prefix="/password-reset", tags=["Passw
 @app.get("/")
 async def read_root(request: Request):
     return {"message": "Backend is running"}
+

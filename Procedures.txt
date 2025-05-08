@@ -12,6 +12,10 @@ Fourth  -> main.py
     OAuth (Google login)
     Email verification
 3. Data Validation
+    Add stricter field types and constraints to your Pydantic models
+    Use regex, min/max length, value ranges, etc.
+    Validate emails, passwords, dates, enums (e.g., roles like student, admin)
+    Return helpful error messages when validation fails
 4. Unit Testing
 5. Documentation
 6. Error Handling
