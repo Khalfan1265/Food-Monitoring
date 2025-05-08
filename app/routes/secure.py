@@ -57,3 +57,4 @@ def read_student_data(current_user: Student = Depends(get_current_user)):
     if current_user.role != "student":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Students only")
     return {"message": f"Welcome Student {current_user.first_name}!"}
+

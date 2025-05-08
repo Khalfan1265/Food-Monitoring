@@ -9,7 +9,6 @@ import uuid
 
 router = APIRouter(prefix="/food", tags=["Food"])
 
-
 # -------------------------
 # Create Food (Admin only)
 # -------------------------

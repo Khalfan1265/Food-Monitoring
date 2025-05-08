@@ -26,9 +26,6 @@ class Student(Base):
     start_date = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
     role = Column(String, default="student", nullable=False) # Could be User or an Admin
 
-    # Optional: to access device info via user.device
-    # devices = relationship("Device", back_populates="user")
-
 
 class Device(Base):
     __tablename__= "device"
@@ -37,9 +34,6 @@ class Device(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey(Student.user_id, ondelete="CASCADE"), nullable=False)
     device_type = Column(String(50), nullable=False)
     registration_date = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
-
-    # Optional: to access user info via device.user
-    # user = relationship("User", back_populates="devices")
 
 
 class Health(Base):

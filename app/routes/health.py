@@ -9,7 +9,6 @@ import uuid
 
 router = APIRouter(prefix="/health", tags=["Health"])
 
-
 # -------------------------
 # Create Health (Admin only)
 # -------------------------

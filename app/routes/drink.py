@@ -7,7 +7,6 @@ import uuid
 
 router = APIRouter(prefix="/drink", tags=["Drink"])
 
-
 # -------------------------
 # Create a Drink (Admin only)
 # -------------------------

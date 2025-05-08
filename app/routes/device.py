@@ -9,7 +9,6 @@ import uuid
 
 router = APIRouter(prefix="/device", tags=["Device"])
 
-
 # -------------------------
 # Create Device (Admin only)
 # -------------------------

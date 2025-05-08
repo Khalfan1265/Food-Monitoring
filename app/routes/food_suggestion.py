@@ -7,7 +7,6 @@ import uuid
 
 router = APIRouter(prefix="/suggestions", tags=["Suggestions"])
 
-
 # -------------------------------
 # Create a Food Suggestion (Admin only)
 # -------------------------------
