@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from app.database import get_db
-from app.models import Student  # SQLAlchemy model
+from app.models import Student
 
 # ------------------------------
 # Authentication Setup
@@ -24,7 +24,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # JWT settings
 SECRET_KEY = "60371ab1e0beda7311dbeb45355a945ed73eaf0516952ef9fb501155c8e3fa19"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30 # Token valid for 30 minutes
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 # ------------------------------
 # Password Utilities
@@ -111,7 +111,7 @@ def role_required(required_role: str):
 # Config (you may move these to a config file)
 RESET_SECRET_KEY = "FfOgGTpgJh-v8FsR-oHU5hjC4T3a24ixjX2hIlewaiJRemBAVsHm_YmIrckFXwcIDlp2IvAVa_FliCmJ7Z2cYw"
 RESET_ALGORITHM = "HS256"
-RESET_TOKEN_EXPIRE_MINUTES = 15  # Token valid for 15 minutes
+RESET_TOKEN_EXPIRE_MINUTES = 15
 
 
 def create_reset_token(data: dict):

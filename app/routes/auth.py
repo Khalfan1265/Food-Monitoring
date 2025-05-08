@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
 import uuid
 
-from app.models import Student  # SQLAlchemy model
-from app.schema import LoginRequest, TokenResponse, TokenRefreshRequest  # Pydantic schemas
+from app.models import Student
+from app.schema import LoginRequest, TokenResponse, TokenRefreshRequest
 from app.security import verify_password, create_access_token, create_refresh_token, verify_reset_token, hash_password, verify_refresh_token
 from app.database import get_db
 from app import models, schema, database, security

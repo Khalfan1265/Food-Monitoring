@@ -6,7 +6,7 @@ from app import models, schema, database
 from app.security import create_reset_token, verify_reset_token, hash_password
 from fastapi.responses import JSONResponse
 from app.database import get_db
-from app.schema import PasswordResetConfirm # Pydantic schemas
+from app.schema import PasswordResetConfirm
 from app.models import Student
 
 

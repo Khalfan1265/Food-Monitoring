@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import models, schema, database
 from app.database import get_db
-from app.security import require_admin, get_current_user  # Import RBAC dependencies
+from app.security import require_admin, get_current_user
 import uuid
 
 router = APIRouter(prefix="/device", tags=["Device"])

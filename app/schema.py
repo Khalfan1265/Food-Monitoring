@@ -44,7 +44,7 @@ class StudentSignup(BaseModel):
     date_of_birth: datetime
     height_m: float
     weight_kg: float
-    role: str = "Student"  # Default value
+    role: str = "Student"
 
 
 

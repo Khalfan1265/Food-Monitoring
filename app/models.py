@@ -94,10 +94,10 @@ class Suggestion(Base):
     generated_on = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
 
 
-# Add this at the bottom of app/models.py
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
+
 
 class TokenResponse(BaseModel):
     access_token: str

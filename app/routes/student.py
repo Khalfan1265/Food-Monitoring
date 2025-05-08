@@ -16,7 +16,7 @@ router = APIRouter(prefix="/student", tags=["Student"])
 def create_student(
     student: schema.StudentCreate,
     db: Session = Depends(get_db),
-    _: models.Student = Depends(require_admin)  # Admins only
+    _: models.Student = Depends(require_admin)
 ):
     existing_student = db.query(models.Student).filter(models.Student.email == student.email).first()
     if existing_student:
@@ -37,7 +37,7 @@ def create_student(
 @router.get("/", response_model=list[schema.StudentOut])
 def get_all_students(
     db: Session = Depends(get_db),
-    _: models.Student = Depends(require_admin)  # Admins only
+    _: models.Student = Depends(require_admin)
 ):
     return db.query(models.Student).all()
 
@@ -48,7 +48,7 @@ def get_all_students(
 def get_student(
     student_id: uuid.UUID,
     db: Session = Depends(get_db),
-    _: models.Student = Depends(require_admin)  # Admins only
+    _: models.Student = Depends(require_admin)
 ):
     student = db.query(models.Student).filter(models.Student.user_id == student_id).first()
     if not student:
@@ -63,7 +63,7 @@ def update_student(
     student_id: uuid.UUID,
     update_data: schema.StudentCreate,
     db: Session = Depends(get_db),
-    _: models.Student = Depends(require_admin)  # Admins only
+    _: models.Student = Depends(require_admin)
 ):
     student = db.query(models.Student).filter(models.Student.user_id == student_id).first()
     if not student:
@@ -86,7 +86,7 @@ def update_student(
 def delete_student(
     student_id: uuid.UUID,
     db: Session = Depends(get_db),
-    _: models.Student = Depends(require_admin)  # Admins only
+    _: models.Student = Depends(require_admin)
 ):
     student = db.query(models.Student).filter(models.Student.user_id == student_id).first()
     if not student:
