@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register - TamuTalk</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1CmXU4ieA+fKt/acZZPngOwPAn5LBJ4wL+qez8UYRD2hM6iSvLg8RYEpvuQ/rtwY1Xsqz+GWG+Xcz+me+m2Kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="signin-page">
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">
+        <img src="images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
+        <span class="logo-text">TamuTalk</span>
+      </div>
+      <nav>
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+      <div class="auth">
+        <a href="signin.html" class="btn-outline">Sign In</a>
+        <a href="register.html" class="btn-primary">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+    <div class="hero-content">
+        <h1>Join TamuTalk Today!</h1>
+        <p class="subtitle">Register to get started</p>
+    </div>
+    <div class="card">
+        <form action="setpreference.html" method="GET">
+        <div class="form-group input-icon">
+            <label>Full Name</label>
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="John Doe" />
+        </div>
+        
+        <div class="form-group input-icon">
+            <label>Email</label>
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="your.email@example.com" />
+        </div>
+
+        <div class="form-group input-icon">
+            <label>Password</label>
+            <i class="fas fa-key"></i>
+            <input type="password" placeholder="••••••••" />
+        </div>
+        <div class="form-group input-icon">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="••••••••" />
+        </div>
+        <button class="btn">Register</button>
+        </form>
+        <div class="signup">
+            Already have an account? <a href="signin.html">Sign in</a>
+        </div>
+
+        <div class="divider">
+            <span>OR</span>
+        </div>
+
+        <div class="social-buttons">
+            <button class="btn-google"><img src="images/OIP (7).jpeg" alt="Google" /></button>
+            <button class="btn-github"><img src="images/github.svg" alt="GitHub" /></button>
+        </div>
+    </div>
+  </div>
+  </section>
+</body>
+</html>
