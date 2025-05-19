@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TamuTalk – Your Personal Meal Reminder Buddy</title>
   <!-- Google Fonts -->
   <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Dancing+Script:wght@400..700&family=Jaro:opsz@6..72&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Dancing+Script:wght@400..700&family=Jaro:opsz@6..72&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
   <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1CmXU4ieA+fKt/acZZPngOwPAn5LBJ4wL+qez8UYRD2hM6iSvLg8RYEpvuQ/rtwY1Xsqz+GWG+Xcz+me+m2Kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p1CmXU4ieA+fKt/acZZPngOwPAn5LBJ4wL+qez8UYRD2hM6iSvLg8RYEpvuQ/rtwY1Xsqz+GWG+Xcz+me+m2Kg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- your CSS -->
-    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="static/css/styles.css">
 </head>
+
 <body>
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="container">
       <div class="logo">
-        <img src="images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
+        <img src="/static/images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
         <span class="logo-text">TamuTalk</span>
       </div>
       <nav>
-        <a href="#" class="nav-link active">Home</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
-        <a href="chatbot.html" class="nav-link">Chatbot</a>
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/login" class="nav-link">Dashboard</a>
+        <a href="#" class="nav-link">Chatbot</a>
       </nav>
       <div class="auth">
-        <a href="signin.html" class="btn-outline">Sign In</a>
-        <a href="register.html" class="btn-primary">Get Started</a>
+        <a href="/login" class="btn-outline">Sign In</a>
+        <a href="/signup" class="btn-primary">Get Started</a>
       </div>
     </div>
   </header>
@@ -40,24 +46,25 @@
       <!-- Left Column -->
       <div class="hero-text">
         <h1>Your <span class="accent-pink">Personal</span> Meal Reminder <span class="accent-green">Buddy</span></h1>
-        <p>Never wonder "what's for dinner?" again with TastyPal's personalized meal reminders and suggestions tailored to your preferences.</p>
+        <p>Never wonder "what's for dinner?" again with TamuTalk's personalized meal reminders and suggestions tailored
+          to your preferences.</p>
         <div class="buttons">
-          <a href="#" class="btn-primary">Get Started</a>
-          <a href="#" class="btn-outline">Learn More</a>
+          <a href="/signup" class="btn-primary">Get Started</a>
+          <a href="#why-tamutalk" class="btn-outline">Learn More</a>
         </div>
       </div>
       <!-- Right Column -->
       <div class="hero-card-wrapper">
         <div class="floating-bg">
-          <img src="images/egg-1.svg" alt="TastyPal App Screenshot" class="floating-bg-img">
-          <img src="images/hot-dog-2.svg" alt="TastyPal App Screenshot" class="floating-bg-img">
-          <img src="images/8344122.png" alt="TastyPal App Screenshot" class="floating-bg-img">
-          <img src="images/OIP (6).jpeg" alt="TastyPal App Screenshot" class="floating-bg-img">
-          <img src="images/R.svg" alt="TastyPal App Screenshot" class="floating-bg-img">
+          <img src="/static/images/egg-1.svg" alt="TastyPal App Screenshot" class="floating-bg-img">
+          <img src="/static/images/hot-dog-2.svg" alt="TastyPal App Screenshot" class="floating-bg-img">
+          <img src="/static/images/8344122.png" alt="TastyPal App Screenshot" class="floating-bg-img">
+          <img src="/static/images/OIP (6).jpeg" alt="TastyPal App Screenshot" class="floating-bg-img">
+          <img src="/static/images/R.svg" alt="TastyPal App Screenshot" class="floating-bg-img">
         </div>
         <div class="hero-card">
           <div class="card-header">
-            <img src="images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Chef Hat" class="chef-icon" />
+            <img src="/static/images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Chef Hat" class="chef-icon" />
             <h3>Today's Suggestion</h3>
           </div>
           <div class="suggestion">
@@ -76,7 +83,7 @@
   <!-- ============================= -->
   <!-- WHY YOU’LL LOVE TAMUTALK -->
   <!-- ============================= -->
-  <section class="features">
+  <section class="features" id="why-tamutalk">
     <div class="container">
       <h2 class="section-title">Why You’ll Love TamuTalk</h2>
       <p class="section-subtitle">
@@ -84,17 +91,20 @@
       </p>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon bg-pink"><img src="images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Personalized Suggestions Icon" class="feature-icon-img" /></div>
+          <div class="feature-icon bg-pink"><img src="/static/images/chef-hat-icon-1024x1022-eu55o6pc.png"
+              alt="Personalized Suggestions Icon" class="feature-icon-img" /></div>
           <h3>Personalized Suggestions</h3>
           <p>Get meal ideas based on your tastes and dietary needs</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon bg-yellow"><img src="images/reminder-image.jpg" alt="Personalized Suggestions Icon" class="feature-icon-img" /></div>
+          <div class="feature-icon bg-yellow"><img src="/static/images/reminder-image.jpg" alt="Personalized Suggestions Icon"
+              class="feature-icon-img" /></div>
           <h3>Meal Planning</h3>
           <p>Schedule your meals for the week with easy calendar integration</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon bg-pink-light"><img src="images/4388269.png" alt="Personalized Suggestions Icon" class="feature-icon-img" /></div>
+          <div class="feature-icon bg-pink-light"><img src="/static/images/4388269.png" alt="Personalized Suggestions Icon"
+              class="feature-icon-img" /></div>
           <h3>Timely Reminders</h3>
           <p>Never forget meal prep with friendly, customizable notifications</p>
         </div>
@@ -104,22 +114,22 @@
 
   <!-- ================== -->
   <!-- FOOTER & CONTAINER -->
-   <!-- ================= -->
+  <!-- ================= -->
   <section class="cta-section">
     <div class="cta-content">
       <h2>Ready to transform your meal planning?</h2>
       <p>Join thousands of happy users who never worry about "what to cook" again!</p>
-      <a href="#" class="cta-button">Get Started Today</a>
+      <a href="/signup" class="cta-button">Get Started Today</a>
     </div>
   </section>
   <footer class="cta-footer">
     <div class="footer-left">
-      <img src="images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
+      <img src="/static/images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
       <span class="logo-text">TamuTalk</span>
     </div>
     <div class="footer-right">
       &copy; 2025 TamuTalk. All rights reserved.
     </div>
-  </footer>  
+  </footer>
 </body>
 </html>

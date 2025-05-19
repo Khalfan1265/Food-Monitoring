@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,27 +8,32 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1CmXU4ieA+fKt/acZZPngOwPAn5LBJ4wL+qez8UYRD2hM6iSvLg8RYEpvuQ/rtwY1Xsqz+GWG+Xcz+me+m2Kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p1CmXU4ieA+fKt/acZZPngOwPAn5LBJ4wL+qez8UYRD2hM6iSvLg8RYEpvuQ/rtwY1Xsqz+GWG+Xcz+me+m2Kg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <!-- Your CSS -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="static/css/styles.css">
 </head>
+
 <body class="signin-page">
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="container">
       <div class="logo">
-        <img src="images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
+        <img src="/static/images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
         <span class="logo-text">TamuTalk</span>
       </div>
       <nav>
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/" class="nav-link active">Home</a>
+        <a href="#" class="nav-link">Dashboard</a>
       </nav>
       <div class="auth">
-        <a href="signin.html" class="btn-outline">Sign In</a>
-        <a href="register.html" class="btn-primary">Get Started</a>
+        <a href="/login" class="btn-outline">Sign In</a>
+        <a href="/signup" class="btn-primary">Get Started</a>
       </div>
     </div>
   </header>
@@ -43,15 +49,11 @@
       <label class="field-label" for="favorite-foods">
         What are some of your favorite foods?
       </label>
-      <input
-        type="text"
-        id="favorite-foods"
-        class="text-input"
-        placeholder="Pizza, pasta, sushi, etc. (separated by commas)"
-      />
+      <input type="text" id="favorite-foods" class="text-input"
+        placeholder="Pizza, pasta, sushi, etc. (separated by commas)" />
       <p class="help-text">This helps us suggest meals you'll enjoy!</p>
 
-      <button class="btn btn-primary">Next Step</button>
+      <button class="btn btn-primary next-btn">Next Step</button>
     </div>
   </section>
 
@@ -79,8 +81,34 @@
         <label><input type="radio" name="diet" value="keto"> Keto</label>
         <label><input type="radio" name="diet" value="paleo"> Paleo</label>
       </fieldset>
+      <fieldset class="radio-group">
+        <legend class="field-label">What is your preferred meal time?</legend>
+        <label><input type="radio" name="meal-time" value="breakfast"> Breakfast</label>
+        <label><input type="radio" name="meal-time" value="lunch"> Lunch</label>
+        <label><input type="radio" name="meal-time" value="dinner"> Dinner</label>
+        <label><input type="radio" name="meal-time" value="snack"> Snack</label>
+      </fieldset>
+      <fieldset class="radio-group">
+        <legend class="field-label">What type of drink do you preferences?</legend>
+        <label><input type="radio" name="drinks" value="carbonated drink">Soda</label>
+        <label><input type="radio" name="drinks" value="water">water</label>
+        <label><input type="radio" name="drinks" value="energy drinks">Energy drinks</label>
+      </fieldset>
+      <fieldset class="radio-group">
+        <legend class="field-label">How many meals do you prefer per day?</legend>
+        <label><input type="radio" name="meals-per-day" value="1"> 1</label>
+        <label><input type="radio" name="meals-per-day" value="2"> 2</label>
+        <label><input type="radio" name="meals-per-day" value="3"> 3</label>
+        <label><input type="radio" name="meals-per-day" value="4"> 4</label>
+      </fieldset>
+      <fieldset class="radio-group">
+        <legend class="field-label">Any related disease?</legend>
+        <label><input type="radio" name="disease" value="diabetes"> Diabetes</label>
+        <label><input type="radio" name="disease" value="hypertension"> Hypertension</label>
+        <label><input type="radio" name="disease" value="heart-disease"> Heart Disease</label>
+      </fieldset>
       <div class="wizard-buttons">
-        <button class="btn btn-secondary">Back</button>
+        <button class="btn btn-secondary back-btn">Back</button>
         <button class="btn btn-primary">Save Preferences</button>
       </div>
     </div>
@@ -88,36 +116,36 @@
   <script>
     // JavaScript for Wizard Navigation
     const wizardCards = document.querySelectorAll('.wizard-card');
-    const nextButtons = document.querySelectorAll('.next-btn');
-    const backButtons = document.querySelectorAll('.back-btn');
-
     let currentStep = 0;
 
     function showStep(step) {
       wizardCards.forEach((card, index) => {
-        card.classList.toggle('active', index === step);
+        card.style.display = index === step ? 'block' : 'none';
       });
     }
 
-    nextButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+    // Handle button clicks
+    document.addEventListener('click', function (e) {
+      // Next button
+      if (e.target.classList.contains('btn-primary') &&
+        e.target.textContent === 'Next Step') {
         if (currentStep < wizardCards.length - 1) {
           currentStep++;
           showStep(currentStep);
         }
-      });
-    });
+      }
 
-    backButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      // Back button
+      if (e.target.classList.contains('btn-secondary') &&
+        e.target.textContent === 'Back') {
         if (currentStep > 0) {
           currentStep--;
           showStep(currentStep);
         }
-      });
+      }
     });
 
-    // Initialize the first step
+    // Initialize first step
     showStep(currentStep);
   </script>
 </body>

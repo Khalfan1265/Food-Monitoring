@@ -1,87 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TamuBot</title>
 </head>
+
 <body>
-    
-<div class="container">
-    <h1>How can I help?</h1>
-
-
-    <div id="chatBox" class="chat-box"></div>
-    <form id="chat-form" class="input-container" style="display: flex; align-items: center;">
-        <input type="text" id="message" placeholder="Type your message..." required />
-        <button type="submit" class="send-btn">Send</button>
-    </form>
-</div>
-
-<!-- ✅ Place script here -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("chat-form");
-    const inputElement = document.getElementById("message");
-    const chatBox = document.getElementById("chatBox");
-
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        try {
-            const userMessage = inputElement.value.trim();
-
-            if (!userMessage) {
-                alert("Please type a message.");
-                return;
-            }
-            
-            // Display the user's message in the chat box
-            addMessage(userMessage, true);
-
-            console.log("User message:", userMessage);
-
-            // Send the message to the server
-            fetch('http://127.0.0.1:5000/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: userMessage }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Server response:", data);
-
-                // Assuming server sends { response: "English..", swahili: "Swahili.." }
-                const botResponse = data.swahili || data.response;
-                addMessage(botResponse, false);
-            })
-            .catch(error => {
-                console.error("An error occurred while sending the message:", error.message);
-                addMessage("Error: Unable to communicate with the server.", false);
-            });
-        } catch (error) {
-            console.error("An error occurred:", error.message);
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
         }
 
-        inputElement.value = ""; // Clear input field
-        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
-    });
+        body {
+            width: 100vw;
+            height: 100%;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    function addMessage(text, isUser) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message');
-        messageDiv.classList.add(isUser ? 'user-message' : 'server-message');
-        messageDiv.textContent = isUser ? `You: ${text}` : `TamuTalk: ${text}`;
-        chatBox.appendChild(messageDiv);
-    }
-});
-</script>
+
+        /* .navbar {
+    background-color: lightslategray;
+    font-size: 1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    padding: 8px 5px 8px 5px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-brand {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.navbar-item {
+    font-variant: small-caps;
+    margin-left: 30px;
+}
+
+.body-content {
+    padding: 5px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#chat-container {
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+#chat-box {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+#chat-form {
+    display: flex;
+}
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.user-msg {
+    text-align: right;
+    background-color: #d1e7dd;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.bot-msg {
+    text-align: left;
+    background-color: #f8d7da;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+} */
+
+        .nav-container {
+            width: 100%;
+            height: 76%;
+            position: sticky;
+            padding: 10px 20px 10px 20px;
+
+            &>.navbar {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                &>.logo {
+                    font-weight: 600;
+                    text-transform: capitalize;
+
+                    &>a {
+                        text-decoration: none;
+                        color: #000000;
+                    }
+                }
+
+                &>ul {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+
+                    &>li {
+                        list-style: none;
+
+                        &>a {
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+
+            &>h1 {
+                text-align: center;
+                text-transform: capitalize;
+            }
+        }
+
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+
+            &>input {
+                flex: 1;
+                padding: 12px;
+                font-size: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                outline: none;
+                transition: border 0.3s ease;
+
+                &:focus {
+                    border-color: #007bff;
+                }
+            }
+        }
+
+        .send-btn {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+
+        .message {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-message {
+            background-color: #daf1ff;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .server-message {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+            text-align: left;
+        }
+    </style>
+
+    <div class="container">
+        <h1>TamuTalk - Your personalised chatbot</h1>
+        <div id="chatBox" class="chat-box"></div>
+        <form id="chat-form" class="input-container" style="display: flex; align-items: center;">
+            <input type="text" id="message" placeholder="Type your message..." required />
+            <button type="submit" class="send-btn">Send</button>
+        </form>
+    </div>
+
+    <!-- ✅ Place script here -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("chat-form");
+            const inputElement = document.getElementById("message");
+            const chatBox = document.getElementById("chatBox");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                try {
+                    const userMessage = inputElement.value.trim();
+
+                    if (!userMessage) {
+                        alert("Please type a message.");
+                        return;
+                    }
+
+                    // Display the user's message in the chat box
+                    addMessage(userMessage, true);
+
+                    console.log("User message:", userMessage);
+
+                    // Send the message to the server
+                    fetch('http://127.0.0.1:5000/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: userMessage }),
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("Server response:", data);
+
+                            // Assuming server sends { response: "English..", swahili: "Swahili.." }
+                            const botResponse = data.swahili || data.response;
+                            addMessage(botResponse, false);
+                        })
+                        .catch(error => {
+                            console.error("An error occurred while sending the message:", error.message);
+                            addMessage("Error: Unable to communicate with the server.", false);
+                        });
+                } catch (error) {
+                    console.error("An error occurred:", error.message);
+                }
+
+                inputElement.value = ""; // Clear input field
+                chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+            });
+
+            function addMessage(text, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'server-message');
+                messageDiv.textContent = isUser ? `You: ${text}` : `TamuTalk: ${text}`;
+                chatBox.appendChild(messageDiv);
+            }
+        });
+    </script>
 </body>
+
 </html>

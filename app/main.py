@@ -1,17 +1,23 @@
 # app/main.py
 
 import os
-from fastapi import FastAPI, Request
+from pathlib import Path
+from fastapi import FastAPI, Request, Form, Depends, HTTPException
 from fastapi.openapi.utils import get_openapi
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from app import models, database
+from jose import jwt
+from app.models import Student
+from app.routes.auth import login_student
+from app.security import SECRET_KEY, ALGORITHM
 from app.routes import (
     student, device, health, food, drink,
     allergy, food_suggestion, auth, secure, password_reset
@@ -30,12 +36,13 @@ app = FastAPI(
     description="Monitoring API with JWT Authentication"
 )
 
+#mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Global Rate Limiter Setup (e.g., 10 requests per minute per IP)
 limiter = Limiter(key_func=get_remote_address, default_limits=["10/minute"])
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
-
 
 # Rate limit error response
 @app.exception_handler(RateLimitExceeded)
@@ -82,13 +89,12 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-
 app.openapi = custom_openapi
 
 # Include routes
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(secure.router, prefix="/secure", tags=["Secure"])
-app.include_router(password_reset.router, prefix="/password-reset", tags=["Password Reset"])
+app.include_router(password_reset.router, prefix="/password_reset", tags=["Password Reset"])
 app.include_router(food_suggestion.router, prefix="/suggestions", tags=["Suggestions"])
 app.include_router(student.router, prefix="/student", tags=["Student"])
 app.include_router(device.router, prefix="/device", tags=["Device"])
@@ -98,7 +104,28 @@ app.include_router(drink.router, prefix="/drink", tags=["Drink"])
 app.include_router(allergy.router, prefix="/allergy", tags=["Allergy"])
 
 # Root route
-@app.get("/")
-async def read_root(request: Request):
-    return {"message": "Backend is running"}
 
+@app.get("/", response_class=HTMLResponse)
+async def read_root_html(request: Request):
+    from app.utils import templates
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/login", response_class=HTMLResponse)
+async def read_signin(request: Request):
+    from app.utils import templates
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/signup", response_class=HTMLResponse)
+async def read_signup(request: Request):
+    from app.utils import templates
+    return templates.TemplateResponse("signup.html", {"request": request})
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def read_dashboard(request: Request):
+    from app.utils import templates
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@app.get("/setpreference", response_class=HTMLResponse)
+async def read_setpreference(request: Request):
+    from app.utils import templates
+    return templates.TemplateResponse("setpreference.html", {"request": request})

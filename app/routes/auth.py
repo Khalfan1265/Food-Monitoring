@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
+from app.utils import templates
+from fastapi.responses import RedirectResponse, HTMLResponse
 import uuid
 
 from app.models import Student
@@ -15,6 +17,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 # -------------------------------
 # Login endpoint
 # -------------------------------
+@router.get("/signin", response_class=HTMLResponse)
+async def read_signin(request: Request):
+    return templates.TemplateResponse("signin.html", {"request": request})
+
 @router.post("/login", response_model=TokenResponse)
 def login_student(login: LoginRequest, db: Session = Depends(get_db)):
     """

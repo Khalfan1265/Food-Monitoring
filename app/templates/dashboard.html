@@ -1,11 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - TamuTalk</title>
+  <!-- Google Fonts -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Dancing+Script:wght@400..700&family=Jaro:opsz@6..72&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p1CmXU4ieA+fKt/acZZPngOwPAn5LBJ4wL+qez8UYRD2hM6iSvLg8RYEpvuQ/rtwY1Xsqz+GWG+Xcz+me+m2Kg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <!-- CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:wght@300;400;500;600&family=Jarom:wght@300;400&display=swap');
+
+    /* ========== RESET & BASE ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Bubblegum Sans';
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, rgba(255, 228, 240, 0.8), rgba(255, 252, 220, 0.8));
+    }
+
+    /* ========== UTILITY ========== */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-family: 'Bubblegum Sans', cursive;
+      color: #ff4b8b;
+
+    }
+
+    .logo-icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    nav .nav-link {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+    }
+
+    nav .nav-link.active,
+    nav .nav-link:hover {
+      color: #ff4b8b;
+    }
+
+    .auth .btn-outline {
+      margin-right: 1rem;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-primary {
+      display: inline-block;
+      background: #ff4b8b;
+      color: #fff;
+      padding: 0.7rem 1.6rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-primary:hover {
+      background: #e63e78;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      color: #ff4b8b;
+      padding: 0.7rem 1.6rem;
+      border: 2px solid #ff4b8b;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s, color 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-outline:hover {
+      background: #ff4b8b;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgb(254, 248, 225);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .tab-button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      background: #e0e0e0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+      background: #f06292;
+      color: white;
+    }
+
+    .content-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .metric-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .metric-card h2 {
+      color: #f06292;
+      margin-bottom: 16px;
+      font-size: 1.4rem;
+    }
+
+    .metric-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .meal-ideas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .meal-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .planner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .planner-text h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #f06292;
+      font-family: 'Bubblegum Sans', cursive;
+    }
+
+    .planner-text p {
+      font-size: 1.2rem;
+      color: #555;
+      font-family: 'Poppins', sans-serif;
+      margin-right: auto;
+    }
+
+    .planner-header .btn-primary {
+      margin-left: 1rem;
+      align-self: flex-start;
+    }
+
+    .planner-text {
+      flex: 1;
+    }
+
+    /* Cards grid */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .card .tag {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      padding: .2rem .6rem;
+      border-radius: .5rem;
+      font-size: .75rem;
+    }
+
+    .card .time {
+      float: right;
+      font-size: .875rem;
+      color: #6b7280;
+    }
+
+    .card h3 {
+      margin: .7rem 0 .5rem;
+    }
+
+    .card-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: .5rem;
+    }
+
+    /* "View all" link */
+    .view-all {
+      font-size: .9rem;
+      color: #ff6b81;
+      text-decoration: none;
+      float: right;
+    }
+
+    .subheading {
+      margin: 2rem 0 .5rem;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body>
-    
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">
+        <img src="/static/images/chef-hat-icon-1024x1022-eu55o6pc.png" alt="Logo Icon" class="logo-icon" />
+        <span class="logo-text">TamuTalk</span>
+      </div>
+      <nav>
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="chatbot.html" class="nav-link">Chatbot</a>
+      </nav>
+      <div class="auth">
+        <a href="/login" class="btn-outline">Sign In</a>
+        <a href="/signup" class="btn-primary">Get Started</a>
+      </div>
+    </div>
+  </header>
+  <section class="meal-planner">
+    <div class="planner-header">
+      <div class="planner-text">
+        <h1>Your Meal Planner</h1>
+        <p>Get personalized meal suggestions based on your preferences</p>
+      </div>
+      <button class="btn btn-primary">Plan Your Week</button>
+    </div>
+    <div class="dashboard-container">
+      <div class="tab-buttons">
+        <button class="tab-button active" onclick="showSection('health')">Health Tracking</button>
+        <button class="tab-button" onclick="showSection('meal')">Meal Ideas</button>
+        <button class="tab-button" onclick="showSection('favorites')">Favorites</button>
+      </div>
+
+      <!-- Health Tracking Section -->
+      <div id="health" class="content-section active">
+        <div class="metric-card">
+          <h2>Health Metrics</h2>
+          <div class="metric-item">
+            <span>User ID:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Heart Rate:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Blood Pressure:</span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <h2>Drink Tracking</h2>
+          <div class="metric-item">
+            <span>Water:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Green Tea:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Black Tea:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Coffee:</span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <h2>Food Intake</h2>
+          <div class="metric-item">
+            <span>Breakfast:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Lunch:</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Dinner:</span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <h2>Allergy</h2>
+          <div class="metric-item">
+            <span>Glutten</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Dairy</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Nuts</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Shellfish</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Eggs</span>
+            <span></span>
+          </div>
+          <div class="metric-item">
+            <span>Fish</span>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Meal Ideas Section -->
+        <div id="meal" class="content-section">
+          <h2 class="subheading">Breakfast Ideas <a href="#" class="view-all">View all</a></h2>
+          <div class="cards">
+            <article class="card">
+              <span class="tag">Breakfast</span>
+              <span class="time">🕒 15 mins</span>
+              <h3>Supu chapati</h3>
+              <p>Creamy avocado spread on whole grain toast topped with perfectly poached eggs.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="tag">Breakfast</span>
+              <span class="time">🕒 10 mins</span>
+              <h3>Chai, maandazi and chapati</h3>
+              <p>Hearty oatmeal topped with fresh blueberries, honey and a sprinkle of almonds.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="tag">Breakfast</span>
+              <span class="time">🕒 5 mins</span>
+              <h3>Juice chapati maandazi</h3>
+              <p>Nutritious blend of spinach, banana, almond milk and chia seeds.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Lunch Ideas -->
+          <h2 class="subheading">Lunch Ideas <a href="#" class="view-all">View all</a></h2>
+          <div class="cards">
+            <article class="card">
+              <span class="tag">Lunch</span>
+              <span class="time">🕒 15 mins</span>
+              <h3>Wali maini</h3>
+              <p>Creamy avocado spread on whole grain toast topped with perfectly poached eggs.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="tag">Lunch</span>
+              <span class="time">🕒 10 mins</span>
+              <h3>Wali Kuku</h3>
+              <p>Hearty oatmeal topped with fresh blueberries, honey and a sprinkle of almonds.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="tag">Lunch</span>
+              <span class="time">🕒 5 mins</span>
+              <h3>Ugali Kuku</h3>
+              <p>Nutritious blend of spinach, banana, almond milk and chia seeds.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Dinner Ideas -->
+          <h2 class="subheading">Dinner Ideas <a href="#" class="view-all">View all</a></h2>
+          <div class="cards">
+            <article class="card">
+              <span class="tag">Dinner</span>
+              <span class="time">🕒 15 mins</span>
+              <h3>Wali Nyama</h3>
+              <p>Creamy avocado spread on whole grain toast topped with perfectly poached eggs.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="tag">Dinner</span>
+              <span class="time">🕒 10 mins</span>
+              <h3>Wali Samaki</h3>
+              <p>Hearty oatmeal topped with fresh blueberries, honey and a sprinkle of almonds.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="tag">Dinner</span>
+              <span class="time">🕒 5 mins</span>
+              <h3>Wali Maharage</h3>
+              <p>Nutritious blend of spinach, banana, almond milk and chia seeds.</p>
+              <div class="card-actions">
+                <button class="btn btn-outline">Details</button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Favorites Section -->
+          <div id="favorites" class="content-section">
+            <div class="metric-card">
+              <h2>Favorite Items</h2>
+              <p>Your favorite items will appear here</p>
+              <button>Add your favorite food</button>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- Closing dashboard-container -->
+    </div>
+    <!-- Closing meal-planner -->
+    <script>
+      function showSection(sectionId) {
+        // Remove active class from all buttons and sections
+        document.querySelectorAll('.tab-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+
+        // Add active class to clicked button and corresponding section
+        document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+        document.getElementById(sectionId).classList.add('active');
+      }
+    </script>
+  </section>
 </body>
 </html>
