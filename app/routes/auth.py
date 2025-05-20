@@ -17,10 +17,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 # -------------------------------
 # Login endpoint
 # -------------------------------
-@router.get("/signin", response_class=HTMLResponse)
-async def read_signin(request: Request):
-    return templates.TemplateResponse("signin.html", {"request": request})
-
 @router.post("/login", response_model=TokenResponse)
 def login_student(login: LoginRequest, db: Session = Depends(get_db)):
     """
