@@ -13,8 +13,6 @@ class StudentCreate(BaseModel):
     user_password: str
     gender: str
     date_of_birth: date
-    height_m: float = None
-    weight_kg: float = None
     role: str = "student"
 
 
@@ -26,8 +24,6 @@ class StudentOut(BaseModel):
     email: EmailStr
     gender: str
     date_of_birth: date
-    height_m: float
-    weight_kg: float
     start_date: datetime
     role: str
 
@@ -42,8 +38,6 @@ class StudentSignup(BaseModel):
     user_password: str
     gender: str
     date_of_birth: datetime
-    height_m: float
-    weight_kg: float
     role: str = "Student"
 
 
@@ -54,9 +48,7 @@ class StudentOut(BaseModel):
     last_name: str
     email: EmailStr
     gender: str
-    data_of_birth: datetime
-    height_m: float
-    weight_kg: float
+    date_of_birth: datetime
     role: str = "Student"
 
     class Config:
@@ -89,6 +81,8 @@ class HealthCreate(BaseModel):
     heart_rate_bpm: int
     systolic_bp: int
     diastolic_bp: int
+    height_m: float = None
+    weight_kg: float = None
     measurement_time: datetime
 
 
@@ -100,6 +94,8 @@ class HealthOut(BaseModel):
     heart_rate_bpm: int
     systolic_bp: int
     diastolic_bp: int
+    height_m: float
+    weight_kg: float
     measurement_time: datetime
 
     class config:
@@ -172,6 +168,8 @@ class AllergyOut(BaseModel):
 class SuggestionCreate(BaseModel):
     user_id: uuid.UUID
     based_on_bp: str
+    food_sg: str
+    drink_sg: str
     generated_on: datetime
 
 
@@ -180,6 +178,8 @@ class SuggestionOut(BaseModel):
     suggestion_id: UUID
     user_id: uuid.UUID
     based_on_bp: str
+    food_sg: str
+    drink_sg: str
     generated_on: datetime
 
     class config:
